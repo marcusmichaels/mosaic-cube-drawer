@@ -117,6 +117,24 @@ frame.addEventListener('mouseover', (evt) => {
   };
 }); 
 
+// Touch event listeners
+frame.addEventListener('touchstart', () => {
+  drawingActive = true;
+});
+
+frame.addEventListener('touchend', () => {
+  drawingActive = false;
+});
+
+frame.addEventListener('touchmove', (evt) => {
+  if (!drawingActive) return;
+  const x = evt.touches[0].pageX - frame.offsetLeft;
+  const y = evt.touches[0].pageY - frame.offsetTop;
+  changeTileColor(x, y, evt.altKey);
+});
+
+
+
 // Cubes consist of an array of 9 ints representing a colour e.g.:
 // [0, 1, 2,
 //  3, 4, 5,
