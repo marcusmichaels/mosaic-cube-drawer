@@ -119,7 +119,7 @@ frame.addEventListener('mouseover', (evt) => {
 
 // Touch event listeners
 frame.addEventListener('touchstart', (evt) => {
-  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
+//  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
 });
 
 frame.addEventListener('touchend', (evt) => {
@@ -127,6 +127,7 @@ frame.addEventListener('touchend', (evt) => {
 });
 
 frame.addEventListener('touchmove', (evt) => {
+  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
   if (!drawingActive) return;
   const x = evt.touches[0].pageX - frame.offsetLeft;
   const y = evt.touches[0].pageY - frame.offsetTop;
