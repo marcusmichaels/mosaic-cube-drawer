@@ -161,19 +161,24 @@ window.addEventListener('resize', () => {
 
 let cubes = []; 
 
-const drawCanvas = () => {
+const drawFrame = (cubeColorData = []) => {
+  cubes = [];
+
+  let cubesToLoadCount = cubeColorData.length > 0 ? cubeColorData.length : cubeCols ** 2;
+
   let currentRow = 0;
   let currentCol = 0;
 
-  for (let i = 0; i < (cubeCols ** 2); i++) {
+  for (let i = 0; i < cubesToLoadCount; i++) {
     if (i !== 0 && i % cubeCols === 0) {
         currentCol = 0;
         currentRow++;
     }
 
+    const cubeColor = cubeColorData.length > 0 ? cubeColorData[i] : defaultColors;
     const posX = currentCol * cubeSize;
     const posY = currentRow * cubeSize;
-    const cube = new Cube(posX, posY, currentRow, currentCol, defaultColors, i);
+    const cube = new Cube(posX, posY, currentRow, currentCol, cubeColor, i);
 
     cubes.push(cube);
     cube.drawCube(); 
@@ -247,16 +252,29 @@ const exportImage = () => {
   link.click();
 }
 
-const resetFrame = (colorId = 0, cubeData = []) => {
-  cubes = cubeData;
+const resetFrame = (colorId = 0) => {
+  cubes = [];
   defaultColors = Array(9).fill(colorId);
-  drawCanvas();
+  drawFrame();
 } 
+
+const saveFrame = () => {
+  // Pull just the color data for each cube into an array
+  const cubeColorData = cubes.map(cube => cube.colors);
+  
+  // Stringify so it's easier to encode to base64
+  const encodedData = btoa(JSON.stringify(cubeColorData));
+
+  return encodedData;
+}
+
+const loadFrame = (base64ColorData) => {
+  const colorDataArray = JSON.parse(atob(base64ColorData));
+  drawFrame(colorDataArray);	
+}
 
 // TODO:
 // Make it look nicer
 
 
-
-
-drawCanvas();
+drawFrame();
