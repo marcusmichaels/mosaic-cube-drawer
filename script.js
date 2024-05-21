@@ -14,18 +14,22 @@ const detectHit = (x, y, obj, objSize) => {
   return true;
 }
 
-const changeTileColor = (x, y) => {
+const changeTileColor = (x, y, wholeCube = false) => {
   // Only find a cube if the click is in bounds
   const hitCube = cubes.find((cube) => detectHit(x, y, cube, cubeSize));
   
   if (!hitCube) return;
   
   // We need to duplicate the array otherwise it gets rreeaalll funky
-  const newColors = [...hitCube.colors]; 
+  let newColors = [...hitCube.colors]; 
 
   // Detect tile
-  const hitTile = hitCube.tiles.find((tile) => detectHit(x, y, tile, tileSize));  
-  newColors[hitTile.index] = selectedColor;
+  if (wholeCube) {
+    newColors = Array(9).fill(selectedColor);
+  } else {
+    const hitTile = hitCube.tiles.find((tile) => detectHit(x, y, tile, tileSize));  
+    newColors[hitTile.index] = selectedColor;
+  }
  
   hitCube.colors = newColors;
   hitCube.drawCube();
@@ -80,7 +84,7 @@ frame.addEventListener('click', (evt) => {
   const x = evt.pageX - frame.offsetLeft;
   const y = evt.pageY - frame.offsetTop;
   console.log(x, y);
-  changeTileColor(x, y);
+  changeTileColor(x, y, evt.altKey);
 });
 
 frame.addEventListener('mousemove', (evt) => {
@@ -88,13 +92,18 @@ frame.addEventListener('mousemove', (evt) => {
   const x = evt.pageX - frame.offsetLeft;
   const y = evt.pageY - frame.offsetTop;
   console.log(x, y);
-  changeTileColor(x, y);
+  changeTileColor(x, y, evt.altKey);
 });
 
 for (let c of selectableColors) {
   const colorId = parseInt(c.dataset.colorId, 10);
   c.style.backgroundColor = findColor(colorId);
-  c.onclick = (evt) => { handleColorSelect(evt.target, colorId) };
+  c.onclick = (evt) => {
+    if (evt.altKey) {
+      colorFrame(colorId);
+    } 
+    handleColorSelect(evt.target, colorId) 
+  };
   if (selectedColor === colorId) {
     c.classList.add('selected');
   }
@@ -201,20 +210,18 @@ const exportImage = () => {
   const frameImageUrl = frame.toDataURL();
 
   const link = document.createElement('a');
-  link.download = 'filename.png';
+  link.download = `mosaic-cube-export-${Date.now()}.png`;
   link.href = frameImageUrl
   link.click();
 }
 
-const clearFrame = () => {
+const colorFrame = (colorId) => {
   cubes = [];
-  defaultColors = [0,0,0,0,0,0,0,0,0];
+  defaultColors = Array(9).fill(colorId);
   drawCanvas();
 } 
 
 // TODO:
-// ALT+Click a color to make the whole frame that color
-// ALT+Click a cube to make the whole cube that color
 // Make it look nicer
 
 

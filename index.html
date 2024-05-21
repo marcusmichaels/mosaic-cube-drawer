@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Mosaic cube drawer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <style>
@@ -28,6 +29,13 @@
       }
     </style>
     <canvas id="frame"></canvas>
+    <section class="tips">
+      <p>Protips:</p>
+      <ul>
+        <li>Hold ALT and click on a tile to change the colour of the whole cube.</li>
+        <li>Hold ALT and select a color to change the color of all the cubes</li>
+      </ul>
+    </section>
     <section class="color-selection">
       <p>Select a color</p>
       <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
@@ -37,7 +45,8 @@
       <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
       <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
     </section> 
-    <button onclick="clearFrame()">Clear</button>
+    <button onclick="colorFrame(0)">Clear</button>
+    <button onclick="exportImage()">Save image...</button>
     <script src="script.js"></script>
   </body>
 </html>
