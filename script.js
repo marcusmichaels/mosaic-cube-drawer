@@ -77,13 +77,14 @@ let drawingActive = false;
 frame.addEventListener('mousedown', () => {
   drawingActive = true;
 });
+
 frame.addEventListener('mouseup', () => {
   drawingActive = false;
 });
+
 frame.addEventListener('click', (evt) => {
   const x = evt.pageX - frame.offsetLeft;
   const y = evt.pageY - frame.offsetTop;
-  console.log(x, y);
   changeTileColor(x, y, evt.altKey);
 });
 
@@ -91,7 +92,6 @@ frame.addEventListener('mousemove', (evt) => {
   if (!drawingActive) return;
   const x = evt.pageX - frame.offsetLeft;
   const y = evt.pageY - frame.offsetTop;
-  console.log(x, y);
   changeTileColor(x, y, evt.altKey);
 });
 
@@ -101,14 +101,21 @@ for (let c of selectableColors) {
   c.onclick = (evt) => {
     if (evt.altKey) {
       colorFrame(colorId);
+    } else {
+      handleColorSelect(evt.target, colorId) 
     } 
-    handleColorSelect(evt.target, colorId) 
   };
   if (selectedColor === colorId) {
     c.classList.add('selected');
   }
 }
- 
+
+// Stop issue where drawing continues if mouse leaves frame whilst active 
+frame.addEventListener('mouseover', (evt) => {
+  if (evt.buttons === 0) {
+    drawingActive = false;
+  };
+}); 
 
 // Cubes consist of an array of 9 ints representing a colour e.g.:
 // [0, 1, 2,
