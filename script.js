@@ -118,16 +118,11 @@ frame.addEventListener('mouseover', (evt) => {
 }); 
 
 // Touch event listeners
-frame.addEventListener('touchstart', () => {
-  drawingActive = true;
-});
-
-frame.addEventListener('touchend', () => {
-  drawingActive = false;
+frame.addEventListener('touchstart', (evt) => {
+  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
 });
 
 frame.addEventListener('touchmove', (evt) => {
-  if (!drawingActive) return;
   const x = evt.touches[0].pageX - frame.offsetLeft;
   const y = evt.touches[0].pageY - frame.offsetTop;
   changeTileColor(x, y, evt.altKey);
