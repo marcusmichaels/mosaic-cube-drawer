@@ -119,16 +119,14 @@ frame.addEventListener('mouseover', (evt) => {
 
 // Touch event listeners
 frame.addEventListener('touchstart', (evt) => {
-//  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
+  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "";
 });
 
 frame.addEventListener('touchend', (evt) => {
-  evt.target.style.touchAction = "unset";
+  evt.target.style.touchAction = "";
 });
 
 frame.addEventListener('touchmove', (evt) => {
-  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "unset";
-  if (!drawingActive) return;
   const x = evt.touches[0].pageX - frame.offsetLeft;
   const y = evt.touches[0].pageY - frame.offsetTop;
   changeTileColor(x, y, evt.altKey);
