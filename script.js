@@ -100,7 +100,7 @@ for (let c of selectableColors) {
   c.style.backgroundColor = findColor(colorId);
   c.onclick = (evt) => {
     if (evt.altKey) {
-      colorFrame(colorId);
+      resetFrame(colorId);
     } else {
       handleColorSelect(evt.target, colorId) 
     } 
@@ -132,24 +132,32 @@ frame.addEventListener('touchmove', (evt) => {
   changeTileColor(x, y, evt.altKey);
 });
 
-
-
 // Cubes consist of an array of 9 ints representing a colour e.g.:
 // [0, 1, 2,
 //  3, 4, 5,
 //  0, 1, 2]
 // Colour options: white, yellow, green, orange, red, blue
 
-const dpr = window.devicePixelRatio;
-const computedFrameWidth = frame.getBoundingClientRect().width;
-
+// const dpr = window.devicePixelRatio;
 const cubeCols = 6;
-const cubeSize = 90;
-//const cubeSize = cubeCols * computedFrameWidth;
-const tileSize = cubeSize / 3;
+let computedFrameWidth = frame.getBoundingClientRect().width;
+let cubeSize = computedFrameWidth / cubeCols;
+let tileSize = cubeSize / 3;
 
 // Dynamically size canvas
 frame.width = frame.height = (cubeCols * cubeSize);
+
+// Recalculate and redraw on a window resize event
+// TODO: Add debounce
+window.addEventListener('resize', () => {
+  computedFrameWidth = frame.getBoundingClientRect().width;
+  cubeSize = computedFrameWidth / cubeCols;
+  tileSize = cubeSize / 3;
+
+  frame.width = frame.height = (cubeCols * cubeSize);
+  resetFrame(0);  
+});
+
 
 let cubes = []; 
 
@@ -176,8 +184,8 @@ const drawCanvas = () => {
 
 class Cube {
   constructor(x, y, row, column, colors, cubeIndex) {
-    this.x = x;
-    this.y = y;
+    this.x = Math.round(x);
+    this.y = Math.round(y);
     this.row = row;
     this.column = column;
     this.colors = colors;
@@ -215,8 +223,8 @@ class Cube {
 
 class Tile {
   constructor(x, y, color, index) {
-    this.x = x;
-    this.y = y;
+    this.x = Math.round(x);
+    this.y = Math.round(y);
     this.color = color;
     this.index = index;
   }
@@ -224,7 +232,7 @@ class Tile {
   draw() {
     ctx.fillStyle = findColor(this.color);
     ctx.fillRect(this.x, this.y, tileSize, tileSize);
-ctx.strokeStyle = "black";
+    ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
     ctx.strokeRect(this.x, this.y, tileSize, tileSize);
   }  
@@ -239,8 +247,8 @@ const exportImage = () => {
   link.click();
 }
 
-const colorFrame = (colorId) => {
-  cubes = [];
+const resetFrame = (colorId = 0, cubeData = []) => {
+  cubes = cubeData;
   defaultColors = Array(9).fill(colorId);
   drawCanvas();
 } 

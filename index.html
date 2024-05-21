@@ -9,11 +9,11 @@
       #frame {
         box-sizing: border-box;
         border:2px solid black;
-	touch-action: none;
+        width: 100%;
       }
       .color-selection {
         display: flex;
-        width: 440px;; 
+        width: 440px; 
         justify-content: space-between;
       }
       .color-selection__color {
@@ -46,7 +46,7 @@
       <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
       <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
     </section> 
-    <button onclick="colorFrame(0)">Clear</button>
+    <button onclick="resetFrame()">Clear</button>
     <button onclick="exportImage()">Save image...</button>
     <script src="script.js"></script>
   </body>
