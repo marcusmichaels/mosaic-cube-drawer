@@ -294,5 +294,6 @@ const loadFrame = (base64ColorData) => {
 // Make it look nicer
 // Make save state store to local storage / cookies instead of event listener
 // Functionality to delete save states
+// Handle resizing better so images persist (redraw)
 
 drawFrame();
