@@ -268,6 +268,22 @@ const saveFrame = () => {
   return encodedData;
 }
 
+const createSaveState = () => {
+  const parent = document.getElementById('saves');
+  const img = document.createElement('img');
+  
+  const encodedSave = saveFrame();
+
+  img.src = frame.toDataURL();
+  img.className = "thumbnail";
+
+  img.addEventListener('click', () => {
+    loadFrame(encodedSave);
+  });
+
+  parent.append(img);
+}
+
 const loadFrame = (base64ColorData) => {
   const colorDataArray = JSON.parse(atob(base64ColorData));
   drawFrame(colorDataArray);	
@@ -275,6 +291,7 @@ const loadFrame = (base64ColorData) => {
 
 // TODO:
 // Make it look nicer
-
+// Make save state store to local storage / cookies instead of event listener
+// Functionality to delete save states
 
 drawFrame();

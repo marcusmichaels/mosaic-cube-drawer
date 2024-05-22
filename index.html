@@ -34,6 +34,11 @@
           border: 4px solid black;
         }
       }
+      .thumbnail {
+        display: inline-block;
+        margin: 1rem;
+        max-width: 10rem;
+      }
     </style>
     <canvas id="frame"></canvas>
     <section class="tips">
@@ -53,7 +58,9 @@
       <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
     </section> 
     <button onclick="resetFrame()">Clear</button>
-    <button onclick="exportImage()">Save image...</button>
+    <button onclick="exportImage()">Download image</button>
+    <button onclick="createSaveState()">Save state</button>
+    <section id="saves"></section>
     <script src="script.js"></script>
   </body>
 </html>
