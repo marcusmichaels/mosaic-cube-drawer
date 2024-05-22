@@ -156,7 +156,14 @@ window.addEventListener('resize', () => {
   tileSize = cubeSize / 3;
 
   frame.width = frame.height = (cubeCols * cubeSize);
-  resetFrame(0);  
+ 
+  if (cubes.length === 0) {
+   resetFrame(0);  
+  } else {
+    const cubeColorData = cubes.map(cube => cube.colors);
+    drawFrame(cubeColorData);
+  }
+  
 });
 
 
