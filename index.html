@@ -10,17 +10,28 @@
         margin: 0;
         padding: 0;
       }
+      section {
+        margin: 1rem;
+        box-sizing: border-box;
+      }
+      .canvas-wrapper {
+        padding: 1rem 2rem;
+        box-sizing: border-box;
+      }
       #frame {
         box-sizing: border-box;
         border:2px solid black;
         width: 100%;
         max-width: 50rem;
-        margin: 1rem;
         touch-action: none;
       }
       .color-selection {
+        max-width: 400px;
+        margin: auto 1rem;
+        padding: 1rem 0;
+      }
+      .color-swatches {
         display: flex;
-        width: 440px; 
         justify-content: space-between;
       }
       .color-selection__color {
@@ -41,7 +52,9 @@
         max-width: 10rem;
       }
     </style>
-    <canvas id="frame"></canvas>
+    <section class="canvas-wrapper">
+      <canvas id="frame"></canvas>
+    </section>
     <section class="tips">
       <p>Protips:</p>
       <ul>
@@ -51,16 +64,20 @@
     </section>
     <section class="color-selection">
       <p>Select a color</p>
-      <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
-      <div class="color-selection__color color-selection__color--yellow" data-color-id="1"></div>
-      <div class="color-selection__color color-selection__color--green" data-color-id="2"></div>
-      <div class="color-selection__color color-selection__color--orange" data-color-id="3"></div>
-      <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
-      <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
+      <div class="color-swatches">
+        <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
+        <div class="color-selection__color color-selection__color--yellow" data-color-id="1"></div>
+        <div class="color-selection__color color-selection__color--green" data-color-id="2"></div>
+        <div class="color-selection__color color-selection__color--orange" data-color-id="3"></div>
+        <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
+        <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
+    </div>
     </section> 
-    <button onclick="resetFrame()">Clear</button>
-    <button onclick="exportImage()">Download image</button>
-    <button onclick="createSaveState()">Save state</button>
+    <section class="buttons-wrapper">
+      <button onclick="resetFrame()">Clear</button>
+      <button onclick="exportImage()">Download image</button>
+      <button onclick="createSaveState()">Save state</button>
+    </section>
     <section id="saves"></section>
     <script src="script.js"></script>
   </body>
