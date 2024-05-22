@@ -14,11 +14,16 @@
         font-family: monospace;
       }
       section {
-        margin: 1rem;
+        margin: 1rem auto;
         box-sizing: border-box;
+        max-width: 50rem;
+        text-align: center;
+      }
+      a {
+        color: inherit;
       }
       .canvas-wrapper {
-        padding: 1rem 2rem;
+        padding: 1rem;
         box-sizing: border-box;
         text-align: center;
       }
@@ -31,6 +36,20 @@
       }
       .buttons-wrapper {
         margin-bottom:0;
+        .button {
+          background: black;
+          color: white;
+          font-size: 1rem;
+          padding: 0.4rem 0.8rem;
+          border-radius: 4px;
+          border: 0;
+          outline: 0;
+          cursor: pointer;
+          
+          &:hover {
+            background-color: #333;
+          }
+        }
       }
       .color-selection {
         max-width: 400px;
@@ -42,8 +61,8 @@
         justify-content: space-between;
       }
       .color-selection__color {
-        width: 3rem;
-        height: 3rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 3px;
         box-sizing: border-box;
         cursor: pointer;
@@ -60,18 +79,26 @@
         display: inline-block;
         margin: 1rem;
         max-width: 10rem;
+        cursor: pointer;
       }
       .tips {
         ul { padding:0;}
         li {margin:1rem;} 
       }
     </style>
+    <section>
+      <h1>Mosaic cube designer</h1>
+      <p>A tool to help you plan your next mosaic</p>
+      <p>
+        <i>Don't have a mosaic cube? <a href="https://speedcubeshop.com/products/gan-mosaic-cube-bundle?variant=39691920572529" target="_blank"> Get yours here</a>.</i>
+      </p>
+    </section>
     <section class="canvas-wrapper">
       <canvas id="frame"></canvas>
       <section class="buttons-wrapper">
-        <button onclick="resetFrame()">Clear</button>
-        <button onclick="exportImage()">Download image</button>
-        <button onclick="createSaveState()">Save state</button>
+        <button class="button" onclick="resetFrame()">Clear</button>
+        <button class="button" onclick="exportImage()">Download image</button>
+        <button class="button" onclick="createSaveState()">Save state</button>
       </section>
    <section class="color-selection">
       <p>Select a color</p>
@@ -88,11 +115,13 @@
     </section>
    <section id="saves"></section>
     <section class="tips">
-      <p>Protips:</p>
-      <ul>
-        <li>Hold ALT and click on a tile to change the colour of the whole cube.</li>
-        <li>Hold ALT and select a color to change the color of all the cubes</li>
+      <h2>Protips:</h2>
+        Hold ALT and click on a tile to change the colour of the whole cube.
+        <br/>Hold ALT and select a color to change the color of all the cubes.
       </ul>
+    </section>
+    <section>
+        <small>Made by <a href="https://instagram.com/marcusmichaels" target="_blank">Marcus</a><br/><i>No affiliation with speedcubeshop</i></small>
     </section>
      <script src="script.js"></script>
   </body>
