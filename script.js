@@ -4,7 +4,9 @@ const selectableColors = document.getElementsByClassName('color-selection__color
 
 let selectedColor = 3;
 
-let defaultColors = [0,1,2,3,4,5,5,2,3];
+// let defaultColors = [0,1,2,3,4,5,5,2,3];
+let defaultColors = Array(9).fill(0);
+
 
 const detectHit = (x, y, obj, objSize) => {
   // Only find obj if the click is in bounds

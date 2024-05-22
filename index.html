@@ -10,6 +10,9 @@
         margin: 0;
         padding: 0;
       }
+      body {
+        font-family: monospace;
+      }
       section {
         margin: 1rem;
         box-sizing: border-box;
@@ -17,6 +20,7 @@
       .canvas-wrapper {
         padding: 1rem 2rem;
         box-sizing: border-box;
+        text-align: center;
       }
       #frame {
         box-sizing: border-box;
@@ -25,9 +29,12 @@
         max-width: 50rem;
         touch-action: none;
       }
+      .buttons-wrapper {
+        margin-bottom:0;
+      }
       .color-selection {
         max-width: 400px;
-        margin: auto 1rem;
+        margin: auto;
         padding: 1rem 0;
       }
       .color-swatches {
@@ -46,23 +53,27 @@
           border: 4px solid black;
         }
       }
+      #saves {
+        text-align: center;
+      }
       .thumbnail {
         display: inline-block;
         margin: 1rem;
         max-width: 10rem;
       }
+      .tips {
+        ul { padding:0;}
+        li {margin:1rem;} 
+      }
     </style>
     <section class="canvas-wrapper">
       <canvas id="frame"></canvas>
-    </section>
-    <section class="tips">
-      <p>Protips:</p>
-      <ul>
-        <li>Hold ALT and click on a tile to change the colour of the whole cube.</li>
-        <li>Hold ALT and select a color to change the color of all the cubes</li>
-      </ul>
-    </section>
-    <section class="color-selection">
+      <section class="buttons-wrapper">
+        <button onclick="resetFrame()">Clear</button>
+        <button onclick="exportImage()">Download image</button>
+        <button onclick="createSaveState()">Save state</button>
+      </section>
+   <section class="color-selection">
       <p>Select a color</p>
       <div class="color-swatches">
         <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
@@ -73,12 +84,16 @@
         <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
     </div>
     </section> 
-    <section class="buttons-wrapper">
-      <button onclick="resetFrame()">Clear</button>
-      <button onclick="exportImage()">Download image</button>
-      <button onclick="createSaveState()">Save state</button>
+ 
     </section>
-    <section id="saves"></section>
-    <script src="script.js"></script>
+   <section id="saves"></section>
+    <section class="tips">
+      <p>Protips:</p>
+      <ul>
+        <li>Hold ALT and click on a tile to change the colour of the whole cube.</li>
+        <li>Hold ALT and select a color to change the color of all the cubes</li>
+      </ul>
+    </section>
+     <script src="script.js"></script>
   </body>
 </html>
