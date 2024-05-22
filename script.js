@@ -28,6 +28,7 @@ const changeTileColor = (x, y, wholeCube = false) => {
     newColors = Array(9).fill(selectedColor);
   } else {
     const hitTile = hitCube.tiles.find((tile) => detectHit(x, y, tile, tileSize));  
+    if (!hitTile) return;
     newColors[hitTile.index] = selectedColor;
   }
  
@@ -118,13 +119,13 @@ frame.addEventListener('mouseover', (evt) => {
 }); 
 
 // Touch event listeners
-frame.addEventListener('touchstart', (evt) => {
-  evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "";
-});
+// frame.addEventListener('touchstart', (evt) => {
+//   evt.target.style.touchAction = evt.touches.length === 1 ? "none" : "";
+// });
 
-frame.addEventListener('touchend', (evt) => {
-  evt.target.style.touchAction = "";
-});
+// frame.addEventListener('touchend', (evt) => {
+//   evt.target.style.touchAction = "";
+// });
 
 frame.addEventListener('touchmove', (evt) => {
   const x = evt.touches[0].pageX - frame.offsetLeft;
