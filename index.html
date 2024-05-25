@@ -75,7 +75,24 @@
       #saves {
         text-align: center;
       }
-      .thumbnail {
+      .save-state-item {
+        display: inline-block;
+        position: relative;
+      }
+      .save-state-item__remove {
+        position: absolute;
+        border-radius: 3rem;
+        border: 2px solid black;
+        outline: 0;
+        background-color: white;
+        width: 2rem;
+        height: 2rem;
+        color: black;
+        cursor: pointer;
+        top: 0;
+        right: 0;
+      }
+      .save-state-item__thumbnail {
         display: inline-block;
         margin: 1rem;
         max-width: 10rem;
@@ -99,7 +116,7 @@
         <button class="button" onclick="resetFrame()">Clear</button>
         <button class="button" onclick="exportImage()">Download image</button>
         <button class="button" onclick="createSaveState()">Save state</button>
-        <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button>
+       <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
       </section>
    <section class="color-selection">
       <p>Select a color</p>

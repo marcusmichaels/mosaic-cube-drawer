@@ -269,47 +269,110 @@ const resetFrame = (colorId = 0) => {
   drawFrame();
 } 
 
-const saveFrame = () => {
-  // Pull just the color data for each cube into an array
-  const cubeColorData = cubes.map(cube => cube.colors);
-  
-  // Stringify so it's easier to encode to base64
-  const encodedData = btoa(JSON.stringify(cubeColorData));
+let savedData = [];
 
-  return encodedData;
+const saveFrame = (saveDataToLoad = null) => {
+  const cubesData = saveDataToLoad || cubes;
+
+  // Pull just the color data for each cube into an array
+  const cubeColorData = cubesData.map(cube => cube.colors);
+
+  // const base64ify = btoa(JSON.stringify(cubeColorData));
+
+  // Stringify so it's easier to encode to base64
+  const stringifiedData = JSON.stringify(cubeColorData);
+
+  return stringifiedData;
 }
 
-const createSaveState = () => {
+const removeSaveState = (el, uuid) => {
+  // remove the DOM element
+  el.parentNode.parentNode.removeChild(el.parentNode);
+
+  // remove item from localStorage
+  savedData = savedData.filter(save => save.uuid !== uuid);
+  localStorage.setItem('saves', JSON.stringify(savedData));
+}
+
+const createSaveState = (saveDataToLoad = null) => {
   const parent = document.getElementById('saves');
+  const wrapper = document.createElement('div');
+  const removeButton = document.createElement('button');
   const img = document.createElement('img');
   
-  const encodedSave = saveFrame();
+  wrapper.className = "save-state-item";
 
-  img.src = frame.toDataURL();
-  img.className = "thumbnail";
+  removeButton.innerHTML = 'X';
+  removeButton.onclick = () => removeSaveState(img, uuid);
+  removeButton.className = 'save-state-item__remove';  
+
+  let colorData = '';
+  let imgData = '';
+  let uuid = '';
+
+  if (saveDataToLoad) {
+    colorData = saveDataToLoad.colors;
+    imgData = saveDataToLoad.thumbnail;
+    uuid = saveDataToLoad.uuid;
+  } else {
+    colorData = saveFrame();
+    imgData = frame.toDataURL();
+    uuid = Math.floor(Math.random()*1e15).toString(36);
+
+    savedData.push({uuid, thumbnail:imgData, colors:colorData});
+    saveToLocalStorage();
+  }
+
+  img.src = imgData; 
+  img.className = "save-state-item__thumbnail";
+  img.dataset.uuid = uuid;
 
   img.addEventListener('click', () => {
-    loadFrame(encodedSave);
+    loadFrame(colorData);
   });
 
-  parent.append(img);
+  wrapper.append(img);
+  wrapper.append(removeButton);
+  parent.append(wrapper);
 }
 
-const loadFrame = (base64ColorData) => {
-  const colorDataArray = JSON.parse(atob(base64ColorData));
+const saveToLocalStorage = () => {
+  localStorage.setItem('saves', JSON.stringify(savedData));
+}
+
+const loadSaves = () => {
+  const localSaves = localStorage.getItem('saves');
+
+  if (localSaves) {
+    const savesArray = JSON.parse(localSaves);
+    savedData.push(...savesArray);
+    savesArray.forEach(loadedSave => {
+      createSaveState(loadedSave, false);
+    });
+  }
+}
+
+const loadFrame = (stringifiedColorData) => {
+  // const colorDataArray = JSON.parse(atob(base64ColorData));
+  const colorDataArray = JSON.parse(stringifiedColorData);
   drawFrame(colorDataArray);	
 }
 
-const toggleFullscreen = () => {
-  if (!document.fullscreenElement || !document.webkitFullscreenElement ) {
-    canvasWrapper.requestFullscreen() || canvasWrapper.webkitRequestFullscreen();
-  } else if (document.exitFullscreen || document.webkitExitFullscreen) {
-    document.exitFullscreen() || document.webkitExitFullscreen();
-  }
-}
-// TODO:
-// Make it look nicer
-// Make save state store to local storage / cookies instead of event listener
-// Functionality to delete save states
+// Doesn't work correctly on iPhone/iPad due to swipe down to exit
+// const toggleFullscreen = () => {
+//  if (!document.fullscreenElement || !document.webkitFullscreenElement ) {
+//    canvasWrapper.requestFullscreen() || canvasWrapper.webkitRequestFullscreen();
+//  } else if (document.exitFullscreen || document.webkitExitFullscreen) {
+//    document.exitFullscreen() || document.webkitExitFullscreen();
+//  }
+//}
 
-drawFrame();
+// TODO:
+
+const init = () => {
+  drawFrame();
+  loadSaves();
+}
+
+init();
+
