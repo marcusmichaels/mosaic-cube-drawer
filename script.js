@@ -1,6 +1,7 @@
 const frame = document.getElementById('frame');
 const ctx = frame.getContext("2d");
 const selectableColors = document.getElementsByClassName('color-selection__color');
+const canvasWrapper = document.getElementsByClassName('canvas-wrapper')[0];
 
 let selectedColor = 3;
 
@@ -301,7 +302,7 @@ const loadFrame = (base64ColorData) => {
 
 const toggleFullscreen = () => {
   if (!document.fullscreenElement || !document.webkitFullscreenElement ) {
-    document.body.requestFullscreen() || document.webkitRequestFullscreen();
+    canvasWrapper.requestFullscreen() || canvasWrapper.webkitRequestFullscreen();
   } else if (document.exitFullscreen || document.webkitExitFullscreen) {
     document.exitFullscreen() || document.webkitExitFullscreen();
   }
