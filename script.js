@@ -299,6 +299,13 @@ const loadFrame = (base64ColorData) => {
   drawFrame(colorDataArray);	
 }
 
+const toggleFullscreen = () => {
+  if (!document.fullscreenElement || !document.webkitFullscreenElement ) {
+    document.body.requestFullscreen() || document.webkitRequestFullscreen();
+  } else if (document.exitFullscreen || document.webkitExitFullscreen) {
+    document.exitFullscreen() || document.webkitExitFullscreen();
+  }
+}
 // TODO:
 // Make it look nicer
 // Make save state store to local storage / cookies instead of event listener
