@@ -1,154 +1,184 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Mosaic Cube Drawer | Design your mosaic before shuffling your cubes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-    <meta name="keywords" content="mosaic cube, rubicks, rubics, cube, gan cube, gan, mosaic, speedcube, cuber, mosaic cube drawer, mosaic cube designer" />
 
-    <meta property="og:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
-    <meta property="og:description" content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-    <meta property="og:image" content="img/mosaic-cube-drawer.png" />
+<head>
+  <title>Mosaic Cube Drawer | Design your mosaic before shuffling your cubes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
+  <meta name="keywords"
+    content="mosaic cube, rubicks, rubics, cube, gan cube, gan, mosaic, speedcube, cuber, mosaic cube drawer, mosaic cube designer" />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
-    <meta property="twitter:description" content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-    <meta property="twitter:image" content="img/mosaic-cube-drawer.png" />
+  <meta property="og:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
+  <meta property="og:description"
+    content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
+  <meta property="og:image" content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png" />
 
-    <link rel="icon" href="favicon.png" />
-  </head>
-  <body>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      body {
-        font-family: monospace;
-      }
-      section {
-        margin: 1rem auto;
-        box-sizing: border-box;
-        max-width: 50rem;
-        text-align: center;
-      }
-      a {
-        color: inherit;
-      }
-      .canvas-wrapper {
-        padding: 1rem;
-        box-sizing: border-box;
-        text-align: center;
-      }
-      #frame {
-        box-sizing: border-box;
-        border:2px solid black;
-        width: 100%;
-        max-width: 50rem;
-        touch-action: none;
-      }
-      .buttons-wrapper {
-        margin-bottom:0;
-        .button {
-          background: black;
-          color: white;
-          font-size: 1rem;
-          padding: 0.4rem 0.8rem;
-          border-radius: 4px;
-          border: 0;
-          outline: 0;
-          cursor: pointer;
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
+  <meta property="twitter:description"
+    content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
+  <meta property="twitter:image" content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png" />
 
-          &:hover {
-            background-color: #333;
-          }
-        }
-      }
-      .color-selection {
-        max-width: 400px;
-        margin: auto;
-        padding: 1rem 0;
-      }
-      .color-swatches {
-        display: flex;
-        justify-content: space-between;
-      }
-      .color-selection__color {
-        width: 2rem;
-        height: 2rem;
-        border-radius: 3px;
-        box-sizing: border-box;
-        cursor: pointer;
-        border: 1px solid black;
+  <link rel="icon" href="favicon.png" />
+</head>
 
-        &.selected {
-          border: 4px solid black;
-        }
-      }
-      #saves {
-        text-align: center;
-      }
-      .save-state-item {
-        display: inline-block;
-        position: relative;
-      }
-      .save-state-item__remove {
-        position: absolute;
-        border-radius: 3rem;
-        border: 2px solid black;
+<body>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      font-family: monospace;
+    }
+
+    section {
+      margin: 1rem auto;
+      box-sizing: border-box;
+      max-width: 50rem;
+      text-align: center;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .canvas-wrapper {
+      padding: 1rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #frame {
+      box-sizing: border-box;
+      border: 2px solid black;
+      width: 100%;
+      max-width: 50rem;
+      touch-action: none;
+    }
+
+    .buttons-wrapper {
+      margin-bottom: 0;
+
+      .button {
+        background: black;
+        color: white;
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        border: 0;
         outline: 0;
-        background-color: white;
-        width: 2rem;
-        height: 2rem;
-        color: black;
         cursor: pointer;
-        top: 0;
-        right: 0;
+
+        &:hover {
+          background-color: #333;
+        }
       }
-      .save-state-item__thumbnail {
-        display: inline-block;
+    }
+
+    .color-selection {
+      max-width: 400px;
+      margin: auto;
+      padding: 1rem 0;
+    }
+
+    .color-swatches {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .color-selection__color {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 3px;
+      box-sizing: border-box;
+      cursor: pointer;
+      border: 1px solid black;
+
+      &.selected {
+        border: 4px solid black;
+      }
+    }
+
+    #saves {
+      text-align: center;
+    }
+
+    .save-state-item {
+      display: inline-block;
+      position: relative;
+    }
+
+    .save-state-item__remove {
+      position: absolute;
+      border-radius: 3rem;
+      border: 2px solid black;
+      outline: 0;
+      background-color: white;
+      width: 2rem;
+      height: 2rem;
+      color: black;
+      cursor: pointer;
+      top: 0;
+      right: 0;
+    }
+
+    .save-state-item__thumbnail {
+      display: inline-block;
+      margin: 1rem;
+      max-width: 10rem;
+      cursor: pointer;
+    }
+
+    .tips {
+      ul {
+        padding: 0;
+      }
+
+      li {
         margin: 1rem;
-        max-width: 10rem;
-        cursor: pointer;
       }
-      .tips {
-        ul { padding:0;}
-        li {margin:1rem;} 
-      }
-      .canvas-size-wrapper {
-        display: flex;
-        place-items: center;
-        width: 100%;
-        justify-content: center;
-        flex-direction: column;
-        padding-top: 1rem;
-      }
-      #canvas-size-label {
-        font-weight: bold;
-      }
-    </style>
-    <section>
-      <h1>Mosaic cube drawer</h1>
-      <p>Draw, save, and download your Mosaic Cube designs before shuffling your cubes.</p>
-      <p>
-        <i>Don't have a mosaic cube? <a href="https://speedcubeshop.com/products/gan-mosaic-cube-bundle?variant=39691920572529" target="_blank"> Get yours here</a>.</i>
-      </p>
-      <div class="canvas-size-wrapper">
-        <label for="canvas-size">Canvas size: <span id="canvas-size-label">6x6</span></label>
-        <input id="canvas-size" name="canvas-size" type="range" min="2" max="10" value="6"/>
-      </div>
+    }
+
+    .canvas-size-wrapper {
+      display: flex;
+      place-items: center;
+      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+      padding-top: 1rem;
+    }
+
+    #canvas-size-label {
+      font-weight: bold;
+    }
+  </style>
+  <section>
+    <h1>Mosaic cube drawer</h1>
+    <p>Draw, save, and download your Mosaic Cube designs before shuffling your cubes.</p>
+    <p>
+      <i>Don't have a mosaic cube? <a
+          href="https://speedcubeshop.com/products/gan-mosaic-cube-bundle?variant=39691920572529" target="_blank"> Get
+          yours here</a>.</i>
+    </p>
+    <div class="canvas-size-wrapper">
+      <label for="canvas-size">Canvas size: <span id="canvas-size-label">6x6</span></label>
+      <input id="canvas-size" name="canvas-size" type="range" min="2" max="10" value="6" />
+    </div>
+  </section>
+  <section class="canvas-wrapper">
+    <canvas id="frame"></canvas>
+    <section class="buttons-wrapper">
+      <button class="button" onclick="resetFrame()">Clear</button>
+      <button class="button" onclick="exportImage()">Download image</button>
+      <button class="button" onclick="createSaveState()">Save state</button>
+      <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
     </section>
-    <section class="canvas-wrapper">
-      <canvas id="frame"></canvas>
-      <section class="buttons-wrapper">
-        <button class="button" onclick="resetFrame()">Clear</button>
-        <button class="button" onclick="exportImage()">Download image</button>
-        <button class="button" onclick="createSaveState()">Save state</button>
-       <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
-      </section>
-   <section class="color-selection">
+    <section class="color-selection">
       <p>Select a color</p>
       <div class="color-swatches">
         <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
@@ -157,20 +187,22 @@
         <div class="color-selection__color color-selection__color--orange" data-color-id="3"></div>
         <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
         <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
-    </div>
-    </section> 
- 
+      </div>
     </section>
-   <section id="saves"></section>
-    <section class="tips">
-      <h2>Protips:</h2>
-        Hold ALT and click on a tile to change the colour of the whole cube.
-        <br/>Hold ALT and select a color to change the color of all the cubes.
-      </ul>
-    </section>
-    <section>
-        <small>Made by <a href="https://instagram.com/marcusmichaels" target="_blank">Marcus</a><br/><i>No affiliation with speedcubeshop</i></small>
-    </section>
-     <script src="script.js"></script>
-  </body>
+
+  </section>
+  <section id="saves"></section>
+  <section class="tips">
+    <h2>Protips:</h2>
+    Hold ALT and click on a tile to change the colour of the whole cube.
+    <br />Hold ALT and select a color to change the color of all the cubes.
+    </ul>
+  </section>
+  <section>
+    <small>Made by <a href="https://instagram.com/marcusmichaels" target="_blank">Marcus</a><br /><i>No affiliation with
+        speedcubeshop</i></small>
+  </section>
+  <script src="script.js"></script>
+</body>
+
 </html>
