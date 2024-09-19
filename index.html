@@ -48,7 +48,7 @@
           border: 0;
           outline: 0;
           cursor: pointer;
-          
+
           &:hover {
             background-color: #333;
           }
@@ -105,6 +105,17 @@
         ul { padding:0;}
         li {margin:1rem;} 
       }
+      .canvas-size-wrapper {
+        display: flex;
+        place-items: center;
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        padding-top: 1rem;
+      }
+      #canvas-size-label {
+        font-weight: bold;
+      }
     </style>
     <section>
       <h1>Mosaic cube designer</h1>
@@ -112,6 +123,10 @@
       <p>
         <i>Don't have a mosaic cube? <a href="https://speedcubeshop.com/products/gan-mosaic-cube-bundle?variant=39691920572529" target="_blank"> Get yours here</a>.</i>
       </p>
+      <div class="canvas-size-wrapper">
+        <label for="canvas-size">Canvas size: <span id="canvas-size-label">6x6</span></label>
+        <input id="canvas-size" name="canvas-size" type="range" min="2" max="10" value="6"/>
+      </div>
     </section>
     <section class="canvas-wrapper">
       <canvas id="frame"></canvas>

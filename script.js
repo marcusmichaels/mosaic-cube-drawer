@@ -2,6 +2,8 @@ const frame = document.getElementById('frame');
 const ctx = frame.getContext("2d");
 const selectableColors = document.getElementsByClassName('color-selection__color');
 const canvasWrapper = document.getElementsByClassName('canvas-wrapper')[0];
+const canvasSize = document.getElementById('canvas-size');
+const canvasSizeLabel = document.getElementById('canvas-size-label');
 
 let selectedColor = 3;
 
@@ -13,7 +15,7 @@ const detectHit = (x, y, obj, objSize) => {
   // Only find obj if the click is in bounds
   if ((y < obj.y || y > obj.y + objSize) || (x < obj.x || x > obj.x + objSize)) return false;
   
-  console.log("Hit:", obj);
+  // console.log("Hit:", obj);
   return true;
 }
 
@@ -107,7 +109,7 @@ for (let c of selectableColors) {
       resetFrame(colorId);
     } else {
       handleColorSelect(evt.target, colorId) 
-    } 
+    }
   };
   if (selectedColor === colorId) {
     c.classList.add('selected');
@@ -143,7 +145,13 @@ frame.addEventListener('touchmove', (evt) => {
 // Colour options: white, yellow, green, orange, red, blue
 
 // const dpr = window.devicePixelRatio;
-const cubeCols = 6;
+let cubeCols = localStorage.getItem('lastSetColumns') || 6;
+
+if (cubeCols !== 6) {
+  canvasSize.value = cubeCols;
+  canvasSizeLabel.innerText = `${cubeCols}x${cubeCols}`;
+}
+
 let computedFrameWidth = frame.getBoundingClientRect().width;
 let cubeSize = computedFrameWidth / cubeCols;
 let tileSize = cubeSize / 3;
@@ -151,22 +159,42 @@ let tileSize = cubeSize / 3;
 // Dynamically size canvas
 frame.width = frame.height = (cubeCols * cubeSize);
 
-// Recalculate and redraw on a window resize event
-// TODO: Add debounce
-window.addEventListener('resize', () => {
+const handleResize = () => {
   computedFrameWidth = frame.getBoundingClientRect().width;
   cubeSize = computedFrameWidth / cubeCols;
   tileSize = cubeSize / 3;
 
   frame.width = frame.height = (cubeCols * cubeSize);
- 
+
   if (cubes.length === 0) {
-   resetFrame(0);  
+   resetFrame(0);
   } else {
     const cubeColorData = cubes.map(cube => cube.colors);
     drawFrame(cubeColorData);
   }
-  
+};
+
+const resizeFrameByColumns = (cols) => {
+  cubeCols = parseInt(cols, 10);
+  handleResize();
+  drawFrame();
+
+  canvasSizeLabel.innerText = `${cubeCols}x${cubeCols}`;
+  canvasSize.value = cubeCols;
+
+  localStorage.setItem('lastSetColumns', cubeCols);
+};
+
+// Recalculate and redraw on a window resize event
+// TODO: Add debounce
+window.addEventListener('resize', () => {
+  handleResize();
+});
+
+
+// Handle dynamic canvas size
+canvasSize.addEventListener('input', (evt) => {
+  resizeFrameByColumns(evt.target.value);
 });
 
 
@@ -192,8 +220,8 @@ const drawFrame = (cubeColorData = []) => {
     const cube = new Cube(posX, posY, currentRow, currentCol, cubeColor, i);
 
     cubes.push(cube);
-    cube.drawCube(); 
-    
+    cube.drawCube();
+
     currentCol++;
   };
 }
@@ -208,7 +236,7 @@ class Cube {
     this.cubeIndex = cubeIndex;
     this.tiles = [];
   }
-  
+
   static calcXPos(x, i) {
     const tilePosition = x;
     if ([0,3,6].includes(i)) return tilePosition;
@@ -230,7 +258,7 @@ class Cube {
       tile.draw();
       this.tiles.push(tile);
     });
-    
+
     ctx.strokeStyle = "black";
     ctx.lineWidth = 3;
     ctx.strokeRect(this.column * cubeSize, this.row * cubeSize, cubeSize, cubeSize);
@@ -281,7 +309,6 @@ const saveFrame = (saveDataToLoad = null) => {
 
   // Stringify so it's easier to encode to base64
   const stringifiedData = JSON.stringify(cubeColorData);
-
   return stringifiedData;
 }
 
@@ -309,17 +336,19 @@ const createSaveState = (saveDataToLoad = null) => {
   let colorData = '';
   let imgData = '';
   let uuid = '';
+  let cols = cubeCols;
 
   if (saveDataToLoad) {
     colorData = saveDataToLoad.colors;
     imgData = saveDataToLoad.thumbnail;
     uuid = saveDataToLoad.uuid;
+    cols = saveDataToLoad.columns || 6;
   } else {
     colorData = saveFrame();
     imgData = frame.toDataURL();
     uuid = Math.floor(Math.random()*1e15).toString(36);
 
-    savedData.push({uuid, thumbnail:imgData, colors:colorData});
+    savedData.push({uuid, thumbnail:imgData, colors:colorData, columns: cubeCols});
     saveToLocalStorage();
   }
 
@@ -328,7 +357,7 @@ const createSaveState = (saveDataToLoad = null) => {
   img.dataset.uuid = uuid;
 
   img.addEventListener('click', () => {
-    loadFrame(colorData);
+    loadFrame(colorData, cols)
   });
 
   wrapper.append(img);
@@ -352,10 +381,11 @@ const loadSaves = () => {
   }
 }
 
-const loadFrame = (stringifiedColorData) => {
+const loadFrame = (stringifiedColorData, columns) => {
   // const colorDataArray = JSON.parse(atob(base64ColorData));
   const colorDataArray = JSON.parse(stringifiedColorData);
-  drawFrame(colorDataArray);	
+  resizeFrameByColumns(columns);
+  drawFrame(colorDataArray);
 }
 
 // Doesn't work correctly on iPhone/iPad due to swipe down to exit
