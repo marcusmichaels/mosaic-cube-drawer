@@ -145,7 +145,7 @@ frame.addEventListener('touchmove', (evt) => {
 // Colour options: white, yellow, green, orange, red, blue
 
 // const dpr = window.devicePixelRatio;
-let cubeCols = localStorage.getItem('lastSetColumns') || 6;
+let cubeCols = parseInt(localStorage.getItem('lastSetColumns'), 10) || 6;
 
 if (cubeCols !== 6) {
   canvasSize.value = cubeCols;
