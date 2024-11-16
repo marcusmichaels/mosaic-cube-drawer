@@ -1,0 +1,20 @@
+{
+  "lang": "en",
+  "dir": "ltr",
+  "name": "Mosaic Cube Drawer",
+  "short_name": "Mosaic Drawer",
+  "icons": [{
+    "src": "img/mosaic-icon.png",
+    "sizes": "64x64"
+  }, {
+    "src": "img/mosaic-icon",
+    "sizes": "128x128"
+  }],
+  "scope": "/",
+  "id": "mosaicdrawer",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "black",
+  "background_color": "white"
+}
