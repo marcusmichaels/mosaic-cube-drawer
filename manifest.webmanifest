@@ -10,10 +10,10 @@
     "src": "favicon.png",
     "sizes": "128x128"
   }],
-  "scope": "/",
+  "scope": "/mosaic-cube-drawer/",
   "id": "mosaicdrawer",
-  "start_url": "/",
-  "display": "fullscreen",
+  "start_url": "/mosaic-cube-drawer/",
+  "display": "standalone",
   "orientation": "portrait",
   "theme_color": "black",
   "background_color": "white"
