@@ -4,10 +4,10 @@
   "name": "Mosaic Cube Drawer",
   "short_name": "Mosaic Drawer",
   "icons": [{
-    "src": "img/mosaic-icon.png",
+    "src": "favicon.png",
     "sizes": "64x64"
   }, {
-    "src": "img/mosaic-icon",
+    "src": "favicon.png",
     "sizes": "128x128"
   }],
   "scope": "/",
