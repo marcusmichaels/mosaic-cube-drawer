@@ -158,6 +158,11 @@
     #canvas-size-label {
       font-weight: bold;
     }
+    
+    p {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   </style>
   <section>
     <h1>Mosaic cube drawer</h1>
@@ -170,12 +175,7 @@
   </section>
   <section class="canvas-wrapper">
     <canvas id="frame"></canvas>
-    <section class="buttons-wrapper">
-      <button class="button" onclick="resetFrame()">Clear</button>
-      <button class="button" onclick="exportImage()">Download image</button>
-      <button class="button" onclick="createSaveState()">Save state</button>
-      <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
-    </section>
+
     <section class="color-selection">
       <p>Select a color</p>
       <div class="color-swatches">
@@ -186,6 +186,13 @@
         <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
         <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
       </div>
+    </section>
+    
+    <section class="buttons-wrapper">
+      <button class="button" onclick="resetFrame()">Clear</button>
+      <button class="button" onclick="exportImage()">Download image</button>
+      <button class="button" onclick="createSaveState()">Save state</button>
+      <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
     </section>
   </section>
 
