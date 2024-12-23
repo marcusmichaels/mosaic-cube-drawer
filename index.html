@@ -1,214 +1,317 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+	<head>
+		<title>
+			Mosaic Cube Drawer | Design your mosaic before shuffling your cubes
+		</title>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, user-scalable=no"
+		/>
+		<meta
+			name="description"
+			content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes."
+		/>
+		<meta
+			name="keywords"
+			content="mosaic cube, rubicks, rubics, cube, gan cube, gan, mosaic, speedcube, cuber, mosaic cube drawer, mosaic cube designer"
+		/>
 
-<head>
-  <title>Mosaic Cube Drawer | Design your mosaic before shuffling your cubes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-  <meta name="keywords"
-    content="mosaic cube, rubicks, rubics, cube, gan cube, gan, mosaic, speedcube, cuber, mosaic cube drawer, mosaic cube designer" />
+		<link rel="manifest" href="manifest.webmanifest" />
 
-  <link rel="manifest" href="manifest.webmanifest">
+		<meta
+			property="og:title"
+			content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes"
+		/>
+		<meta
+			property="og:description"
+			content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes."
+		/>
+		<meta
+			property="og:image"
+			content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png"
+		/>
 
-  <meta property="og:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
-  <meta property="og:description"
-    content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-  <meta property="og:image" content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png" />
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta
+			property="twitter:title"
+			content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes"
+		/>
+		<meta
+			property="twitter:description"
+			content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes."
+		/>
+		<meta
+			property="twitter:image"
+			content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png"
+		/>
 
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Mosaic Cube Drawer | Design your mosaic before shuffling your cubes">
-  <meta property="twitter:description"
-    content="Draw, save, and download your Mosaic Cube designs before shuffling your cubes." />
-  <meta property="twitter:image" content="https://marcusmichaels.com/mosaic-cube-drawer/img/mosaic-cube-drawer.png" />
+		<link rel="icon" href="favicon.png" />
+	</head>
 
-  <link rel="icon" href="favicon.png" />
-</head>
+	<body>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				user-select: none;
+				-webkit-user-select: none;
+			}
 
-<body>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
-    }
+			body {
+				font-family: monospace;
 
-    body {
-      font-family: monospace;
-    }
+				&.screen-lock {
+					width: 100%;
+					height: 100%;
+					overflow: hidden;
+				}
+			}
 
-    section {
-      margin: 1rem auto;
-      box-sizing: border-box;
-      max-width: 50rem;
-      text-align: center;
-    }
+			button {
+			}
 
-    a {
-      color: inherit;
-    }
+			section {
+				margin: 1rem auto;
+				box-sizing: border-box;
+				max-width: 50rem;
+				text-align: center;
+			}
 
-    .canvas-wrapper {
-      padding: 1rem;
-      box-sizing: border-box;
-      text-align: center;
-    }
+			a {
+				color: inherit;
+			}
 
-    #frame {
-      box-sizing: border-box;
-      border: 2px solid black;
-      width: 100%;
-      max-width: 50rem;
-      touch-action: none;
-    }
+			.canvas-wrapper {
+				padding: 1rem;
+				box-sizing: border-box;
+				text-align: center;
+			}
 
-    .buttons-wrapper {
-      margin-bottom: 0;
+			#frame {
+				box-sizing: border-box;
+				border: 2px solid black;
+				width: 100%;
+				max-width: 50rem;
+				touch-action: none;
+			}
 
-      .button {
-        background: black;
-        color: white;
-        font-size: 1rem;
-        padding: 0.4rem 0.8rem;
-        border-radius: 4px;
-        border: 0;
-        outline: 0;
-        cursor: pointer;
+			.buttons-wrapper {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				margin-bottom: 0;
+				gap: 1rem;
+				padding: 1rem;
+				padding-bottom: 0;
 
-        &:hover {
-          background-color: #333;
-        }
-      }
-    }
+				.button {
+					background: black;
+					color: white;
+					font-size: 1rem;
+					padding: 0.4rem 0.8rem;
+					/* margin: 0 0.1rem; */
+					border-radius: 4px;
+					border: 0;
+					outline: 0;
+					cursor: pointer;
 
-    .color-selection {
-      max-width: 400px;
-      margin: auto;
-      padding: 1rem 0;
-    }
+					&:hover {
+						background-color: #333;
+					}
+				}
+			}
 
-    .color-swatches {
-      display: flex;
-      justify-content: space-between;
-    }
+			.color-selection {
+				max-width: 400px;
+				margin: auto;
+				padding: 1rem 0;
+			}
 
-    .color-selection__color {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 3px;
-      box-sizing: border-box;
-      cursor: pointer;
-      border: 1px solid black;
+			.color-swatches {
+				display: flex;
+				justify-content: space-between;
+			}
 
-      &.selected {
-        border: 4px solid black;
-      }
-    }
+			.color-selection__color {
+				width: 2rem;
+				height: 2rem;
+				border-radius: 3px;
+				box-sizing: border-box;
+				cursor: pointer;
+				border: 1px solid black;
 
-    #saves {
-      text-align: center;
-    }
+				&.selected {
+					border: 4px solid black;
+				}
+			}
 
-    .save-state-item {
-      display: inline-block;
-      position: relative;
-    }
+			#saves {
+				text-align: center;
+			}
 
-    .save-state-item__remove {
-      position: absolute;
-      border-radius: 3rem;
-      border: 2px solid black;
-      outline: 0;
-      background-color: white;
-      width: 2rem;
-      height: 2rem;
-      color: black;
-      cursor: pointer;
-      top: 0;
-      right: 0;
-    }
+			.save-state-item {
+				display: inline-block;
+				position: relative;
+			}
 
-    .save-state-item__thumbnail {
-      display: inline-block;
-      margin: 1rem;
-      max-width: 10rem;
-      cursor: pointer;
-    }
+			.save-state-item__remove {
+				position: absolute;
+				border-radius: 3rem;
+				border: 2px solid black;
+				outline: 0;
+				background-color: white;
+				width: 2rem;
+				height: 2rem;
+				color: black;
+				cursor: pointer;
+				top: 0;
+				right: 0;
+			}
 
-    .tips {
-      ul {
-        padding: 0;
-      }
+			.save-state-item__thumbnail {
+				display: inline-block;
+				margin: 1rem;
+				max-width: 10rem;
+				cursor: pointer;
+			}
 
-      li {
-        margin: 1rem;
-      }
-    }
+			.tips {
+				ul {
+					padding: 0;
+				}
 
-    .canvas-size-wrapper {
-      display: flex;
-      place-items: center;
-      width: 100%;
-      justify-content: center;
-      flex-direction: column;
-      padding-top: 1rem;
-    }
+				li {
+					margin: 1rem;
+				}
+			}
 
-    #canvas-size-label {
-      font-weight: bold;
-    }
-    
-    p {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-  </style>
-  <section>
-    <h1>Mosaic cube drawer</h1>
-    <p>Draw, save, and download your Mosaic Cube designs before shuffling your cubes.</p>
+			.canvas-size-wrapper {
+				display: flex;
+				place-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
 
-    <div class="canvas-size-wrapper">
-      <label for="canvas-size">Canvas size: <span id="canvas-size-label">6x6</span></label>
-      <input id="canvas-size" name="canvas-size" type="range" min="2" max="10" value="6" />
-    </div>
-  </section>
-  <section class="canvas-wrapper">
-    <canvas id="frame"></canvas>
+			#canvas-size-label {
+				font-weight: bold;
+			}
 
-    <section class="color-selection">
-      <p>Select a color</p>
-      <div class="color-swatches">
-        <div class="color-selection__color color-selection__color--white" data-color-id="0"></div>
-        <div class="color-selection__color color-selection__color--yellow" data-color-id="1"></div>
-        <div class="color-selection__color color-selection__color--green" data-color-id="2"></div>
-        <div class="color-selection__color color-selection__color--orange" data-color-id="3"></div>
-        <div class="color-selection__color color-selection__color--red" data-color-id="4"></div>
-        <div class="color-selection__color color-selection__color--blue" data-color-id="5"></div>
-      </div>
-    </section>
-    
-    <section class="buttons-wrapper">
-      <button class="button" onclick="resetFrame()">Clear</button>
-      <button class="button" onclick="exportImage()">Download image</button>
-      <button class="button" onclick="createSaveState()">Save state</button>
-      <!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
-    </section>
-  </section>
+			p {
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+		</style>
+		<section>
+			<h1>Mosaic cube drawer</h1>
+			<p>
+				Draw, save, and download your Mosaic Cube designs before shuffling your
+				cubes.
+			</p>
 
-  <section id="saves"></section>
-  <section class="tips">
-    <h2>Protips:</h2>
-    Hold ALT and click on a tile to change the colour of the whole cube.
-    <br />Hold ALT and select a color to change the color of all the cubes.
-    </ul>
-  </section>
-  <section>
-    <small>
-      Made by <a href="https://instagram.com/marcusmichaels" target="_blank">@marcusmichaels</a>
-    </small>
-  </section>
-  <script src="script.js"></script>
-</body>
+			<section class="buttons-wrapper">
+				<div class="canvas-size-wrapper">
+					<label for="canvas-size"
+						>Canvas size: <span id="canvas-size-label">6x6</span></label
+					>
+					<input
+						id="canvas-size"
+						name="canvas-size"
+						type="range"
+						min="2"
+						max="10"
+						value="6"
+					/>
+				</div>
+				<div>
+					<button class="button" title="Clear canvas" onclick="resetFrame()">
+						🧽
+					</button>
+					<button class="button" title="Download image" onclick="exportImage()">
+						📥
+					</button>
+					<button class="button" title="Save state" onclick="createSaveState()">
+						💾
+					</button>
+					<button
+						class="button"
+						title="Toggle screen lock"
+						id="screenlock"
+						onclick="toggleScreenLock(this)"
+					>
+						🔓
+					</button>
+				</div>
 
+				<!-- <button class="button" onclick="toggleFullscreen()">Toggle fullscreen</button -->
+			</section>
+		</section>
+		<section class="canvas-wrapper">
+			<canvas id="frame"></canvas>
+
+			<section class="color-selection">
+				<p>Select a color</p>
+				<div class="color-swatches">
+					<div
+						class="color-selection__color color-selection__color--white"
+						data-color-id="0"
+					></div>
+					<div
+						class="color-selection__color color-selection__color--yellow"
+						data-color-id="1"
+					></div>
+					<div
+						class="color-selection__color color-selection__color--green"
+						data-color-id="2"
+					></div>
+					<div
+						class="color-selection__color color-selection__color--orange"
+						data-color-id="3"
+					></div>
+					<div
+						class="color-selection__color color-selection__color--red"
+						data-color-id="4"
+					></div>
+					<div
+						class="color-selection__color color-selection__color--blue"
+						data-color-id="5"
+					></div>
+				</div>
+			</section>
+		</section>
+
+		<section id="saves"></section>
+		<section class="tips">
+			<h2>Protips:</h2>
+			Hold ALT and click on a tile to change the colour of the whole cube.
+			<br />Hold ALT and select a color to change the color of all the cubes.
+		</section>
+		<section>
+			<small>
+				Made by
+				<a href="https://instagram.com/marcusmichaels" target="_blank"
+					>@marcusmichaels</a
+				>
+			</small>
+		</section>
+		<script src="script.js"></script>
+		<script>
+			const bodyElement = document.getElementsByTagName("body")[0];
+
+			const toggleScreenLock = (e) => {
+				console.log({ e });
+				console.log(e);
+				bodyElement.classList.toggle("screen-lock");
+				e.classList.toggle("screen-lock");
+
+				if (e.classList.contains("screen-lock")) {
+					e.textContent = "🔒";
+				} else {
+					e.textContent = "🔓";
+				}
+			};
+		</script>
+	</body>
 </html>
